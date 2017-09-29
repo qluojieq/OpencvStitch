@@ -11,8 +11,8 @@ using namespace std;
 char filepath1[100] = "/storage/emulated/0/Download/PacktBook/Chapter6/panorama_stitched.jpg";
 
 extern "C" {
-    JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_StitchPanorama(JNIEnv*, jobject, jobjectArray, jint, jlong);
-    JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_StitchPanorama(JNIEnv* env, jobject, jobjectArray images, jint size, jlong resultMatAddr)
+    JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama(JNIEnv*, jobject, jobjectArray, jint, jlong);
+    JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama(JNIEnv* env, jobject, jobjectArray images, jint size, jlong resultMatAddr)
 
     {
         jint result = 0;

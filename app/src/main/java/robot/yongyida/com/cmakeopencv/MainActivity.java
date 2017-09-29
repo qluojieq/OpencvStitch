@@ -31,15 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private final static String STITCHING_SOURCE_IMAGES_DIRECTORY = "/sdcard/stitch/";
     private final String STITCHING_RESULT_IMAGES_DIRECTORY = Environment.getExternalStorageDirectory().getPath()+"/PanoDemo/result/";
     private String path = "/sdcard/stitch/";
-    static {
-        System.loadLibrary("native-lib");
-    }
     Bitmap bitmapLeft;
     Bitmap bitmapRight;
     Bitmap bitmapResult;
     ImageView imageLeft;
     ImageView imageRight;
     ImageView imageResult;
+    StitchPanorama stitchPanorama;
     TextView tv;
     public Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         imageLeft = (ImageView) findViewById(R.id.image_left);
         imageRight = (ImageView) findViewById(R.id.image_right);
         imageResult = (ImageView)findViewById(R.id.image_result);
-
+        stitchPanorama = StitchPanorama.CreateStitchHandler();
         initStitchingImageDirectory();
         String pathStringLeft = path+"left.jpg";
      try{
@@ -98,23 +96,23 @@ public class MainActivity extends AppCompatActivity {
                 // Example of a call to a native method
         tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText("图片拼接");
-        tv.setText(stringFromJNI());
+        tv.setText(stitchPanorama.getTestjni());
         imageLeft.setImageBitmap(bitmapLeft);
         imageRight.setImageBitmap(bitmapRight);
         //图片一
-        Mat src = new Mat(bitmapLeft.getHeight(),bitmapLeft.getWidth(), CvType.CV_8UC4);
-        Imgproc.resize(src,src,new Size(src.rows(),src.cols()));
-        Utils.bitmapToMat(bitmapLeft,src);
-        Imgproc.cvtColor(src,src,Imgproc.COLOR_BGR2RGB);
-        readyToStitch.add(src);
+//        Mat src = new Mat(bitmapLeft.getHeight(),bitmapLeft.getWidth(), CvType.CV_8UC4);
+//        Imgproc.resize(src,src,new Size(src.rows(),src.cols()));
+//        Utils.bitmapToMat(bitmapLeft,src);
+//        Imgproc.cvtColor(src,src,Imgproc.COLOR_BGR2RGB);
+//        readyToStitch.add(src);
 
         //图片二
-        Mat srcR = new Mat(bitmapRight.getHeight(),bitmapRight.getWidth(), CvType.CV_8UC4);
-        Imgproc.resize(srcR,srcR,new Size(srcR.rows(),srcR.cols()));
-        Utils.bitmapToMat(bitmapRight,srcR);
-        Imgproc.cvtColor(srcR,srcR,Imgproc.COLOR_BGR2RGB);
-        readyToStitch.add(srcR);
-//
+//        Mat srcR = new Mat(bitmapRight.getHeight(),bitmapRight.getWidth(), CvType.CV_8UC4);
+//        Imgproc.resize(srcR,srcR,new Size(srcR.rows(),srcR.cols()));
+//        Utils.bitmapToMat(bitmapRight,srcR);
+//        Imgproc.cvtColor(srcR,srcR,Imgproc.COLOR_BGR2RGB);
+//        readyToStitch.add(srcR);
+////
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 //                Utils.matToBitmap(matSrc,bitmapResult);
 //                }
 //                handler.sendMessage(msg);
-                int result = jnistitching(source,pathStringResult,1.0);
+                int result = stitchPanorama.jniStitchMethod(source,pathStringResult,0.8);
                 timeCost = timeCost - new Date().getTime();
                 msg.what = 01;
                 msg.arg1 = result;
@@ -204,9 +202,5 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
-    public native int StitchPanorama(Object images[], int size, long addrSrcRes);
-    public native String testjni();
-//    public native int jnistitching(Object images[], String  reultAddr, double scale);
-    public native int jnistitching(String[] source,String result,double scale);
+
 }

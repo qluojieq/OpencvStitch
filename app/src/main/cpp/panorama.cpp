@@ -24,9 +24,9 @@ jmethodID javaMethodRef;
 extern "C"
 {
 //testjni
-JNIEXPORT jstring JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_testjni(JNIEnv *env, jobject obj);
+JNIEXPORT jstring JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama_testjni(JNIEnv *env, jobject obj);
 //OpenCV Stitching(return:0-success,other-error)
-JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_jnistitching(JNIEnv *env, jobject obj, jobjectArray source, jstring result, jdouble scale);
+JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama_jnistitching(JNIEnv *env, jobject obj, jobjectArray source, jstring result, jdouble scale);
 }
 
 //check row
@@ -113,13 +113,13 @@ bool cropLargestPossibleROI(const cv::Mat& gray, cv::Mat& pano, cv::Rect startRO
 }
 
 //testjni
-JNIEXPORT jstring JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_testjni(JNIEnv *env, jobject obj)
+JNIEXPORT jstring JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama_testjni(JNIEnv *env, jobject obj)
 {
     return env->NewStringUTF("Hello from native code!");
 }
 
 //OpenCV Stitching(return:0-success,other-error)
-JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_MainActivity_jnistitching(JNIEnv *env, jobject obj, jobjectArray source, jstring result, jdouble scale)
+JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_StitchPanorama_jnistitching(JNIEnv *env, jobject obj, jobjectArray source, jstring result, jdouble scale)
 {
     clock_t beginTime, endTime;
     double timeSpent;
