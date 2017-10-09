@@ -3,7 +3,6 @@ package robot.yongyida.com.cmakeopencv;
 import android.graphics.Bitmap;
 
 import org.opencv.android.Utils;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 /**

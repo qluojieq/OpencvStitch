@@ -86,6 +86,7 @@ JNIEXPORT jint JNICALL Java_robot_yongyida_com_cmakeopencv_OpencvFrc_faceRec(JNI
     cvtColor(mRgb, testSample, CV_BGR2GRAY); // 转为灰度图像
 
     Ptr<LBPHFaceRecognizer> model = LBPHFaceRecognizer::create(1, 8, 8, 8, DBL_MAX);
+
     model->train(images, labels);
     int predictedLabel = model->predict(testSample);
 

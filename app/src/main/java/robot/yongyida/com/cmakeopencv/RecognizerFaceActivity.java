@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class Main2Activitytestfr extends AppCompatActivity {
+public class RecognizerFaceActivity extends AppCompatActivity {
 
     TextView testJni;
     OpencvFrc opencvFrc;
