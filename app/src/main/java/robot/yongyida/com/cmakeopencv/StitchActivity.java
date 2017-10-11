@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import java.util.Locale;
 public class StitchActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
-    private final static String STITCHING_SOURCE_IMAGES_DIRECTORY = "/sdcard/stitch/";
+    private final static String STITCHING_SOURCE_IMAGES_DIRECTORY = Environment.getExternalStorageDirectory().getPath()+ "/stitch/";
     private final String STITCHING_RESULT_IMAGES_DIRECTORY = Environment.getExternalStorageDirectory().getPath()+"/PanoDemo/result/";
     private String path = "/sdcard/stitch/";
     Bitmap bitmapLeft;
@@ -126,14 +127,12 @@ public class StitchActivity extends AppCompatActivity {
 //                Utils.matToBitmap(matSrc,bitmapResult);
 //                }
 //                handler.sendMessage(msg);
-                int result = stitchPanorama.jniStitchMethod(source,pathStringResult,0.8);
+                int result = stitchPanorama.jniStitchMethod(source,pathStringResult,1.0);
                 timeCost = timeCost - new Date().getTime();
                 msg.what = 01;
                 msg.arg1 = result;
                 msg.obj = timeCost;
-
                 handler.sendMessage(msg);
-
             }
         });
     }
@@ -146,6 +145,11 @@ public class StitchActivity extends AppCompatActivity {
         int index=0;
         int folderCount=0;
         //except folders
+        Log.e("StitchActivity",sourceDirectory.getAbsolutePath());
+        Log.e("StitchActivity",""+sourceDirectory.listFiles());
+        Log.e("StitchActivity",""+sourceDirectory.listFiles().length);
+        if(sourceDirectory.listFiles()==null || sourceDirectory.listFiles().length==0)
+            return null;
         for(File file : sourceDirectory.listFiles())
         {
             if(file.isDirectory())
@@ -154,7 +158,7 @@ public class StitchActivity extends AppCompatActivity {
             }
         }
         filelist=new String[sourceDirectory.listFiles().length-folderCount];
-        for(File file : sourceDirectory.listFiles())
+            for(File file : sourceDirectory.listFiles())
         {
             if(!file.isDirectory())
             {
